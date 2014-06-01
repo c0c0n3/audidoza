@@ -1,0 +1,13 @@
+name:           audit-service
+version:        0.1
+synopsis:       Billdoza Audit Service prototype.
+author:         Andrea Falconi
+license:        BSD3
+build-type:     Simple
+cabal-version:  >= 1.8
+
+executable audit-service
+  build-depends:  base, base-unicode-symbols, hxt, hxt-expat, heredoc
+  main-is:        Main.hs
+  hs-source-dirs: src
+
