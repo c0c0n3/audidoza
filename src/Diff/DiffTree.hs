@@ -14,7 +14,8 @@ module Diff.DiffTree
 where
 
 import Prelude.Unicode
-import Data.Tree
+import Data.Tree.Class
+import Data.Tree.NTree.TypeDefs
 
 import Diff.Content
 import Util.Match
@@ -32,25 +33,23 @@ instance Show ξ ⇒ Show (DiffNode ξ) where
     show (Changed m n) = "* " ++ show m ++ " |~~> " ++ show n 
 
 
-type DiffTree ξ = Tree (DiffNode ξ)
+type DiffTree ξ = NTree (DiffNode ξ)
 
 
 diff ∷ (ContentNode ξ, Ord (Id ξ), Eq (Data ξ)) ⇒
-     Tree ξ → Tree ξ → DiffTree ξ
+       NTree ξ → NTree ξ → DiffTree ξ
 diff previous current 
     | compareContentNode previous current ≡ EQ = diffMatched (previous, current)
     | otherwise                                = fmap New current
 
 
 compareContentNode ∷ (ContentNode ξ, Ord (Id ξ)) ⇒ 
-                   Tree ξ → Tree ξ → Ordering
-compareContentNode t u = compare (nid t) (nid u)
-    where
-    nid = nodeId ∘ rootLabel
+                     NTree ξ → NTree ξ → Ordering
+compareContentNode t u = compare (nodeId t) (nodeId u)
 
 
 splitNodes ∷ (ContentNode ξ, Ord (Id ξ)) ⇒ 
-           [Tree ξ] → [Tree ξ] → ([DiffTree ξ], [(Tree ξ, Tree ξ)])
+             [NTree ξ] → [NTree ξ] → ([DiffTree ξ], [(NTree ξ, NTree ξ)])
 splitNodes previous current = (new ++ deleted, matched)
     where
     matchResult = matchBy compareContentNode previous current
@@ -60,15 +59,15 @@ splitNodes previous current = (new ++ deleted, matched)
 
 
 diffMatched ∷ (ContentNode ξ, Ord (Id ξ), Eq (Data ξ)) ⇒
-            (Tree ξ, Tree ξ) → DiffTree ξ
-diffMatched (previous, current) = Node diffNode children
+              (NTree ξ, NTree ξ) → DiffTree ξ
+diffMatched (previous, current) = NTree diffNode children
     where
-    prevContent = rootLabel previous
-    currContent = rootLabel current
+    prevContent = getNode previous
+    currContent = getNode current
     samePayload = payload prevContent ≡ payload currContent
     diffNode    = if samePayload 
                   then Unchanged prevContent 
                   else Changed prevContent currContent 
     children    = newOrDeleted ++ map diffMatched matched 
-    (newOrDeleted, matched) = splitNodes (subForest previous) (subForest current)
+    (newOrDeleted, matched) = splitNodes (getChildren previous) (getChildren current)
 

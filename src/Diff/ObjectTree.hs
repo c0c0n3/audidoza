@@ -1,4 +1,5 @@
-{-# LANGUAGE UnicodeSyntax, TypeFamilies #-}
+{-# LANGUAGE UnicodeSyntax #-}
+{-# LANGUAGE TypeFamilies #-}
 --
 -- ObjectTree = tree representation of input xml 
 -- input xml  = xml representation of object tree that was saved in Billdoza
@@ -15,7 +16,8 @@ where
 import Prelude.Unicode
 import Data.Text (Text)
 import qualified Data.Text as Text
-import Data.Tree
+import Data.Tree.Class
+import Data.Tree.NTree.TypeDefs
 
 import Diff.Content
 
@@ -50,18 +52,17 @@ instance ContentNode ObjectNode where
     payload (Object _ _ ) = Text.empty
 
 
-type ObjectTree = Tree ObjectNode
+type ObjectTree = NTree ObjectNode
 
 field ∷ Text → Text → ObjectTree
-field name value = Node (Field name value) []
+field name value = NTree (Field name value) []
 
 object ∷ Text → Integer → ([ObjectTree] → ObjectTree)
-object className entityId = Node (Object className entityId)
+object className entityId = NTree (Object className entityId)
 
 name ∷ ObjectTree → Text
-name (Node (Field n _)  _) = n
-name (Node (Object c _) _) = c
+name (NTree (Field n _)  _) = n
+name (NTree (Object c _) _) = c
 
 addChildren ∷ ObjectTree → [ObjectTree] → ObjectTree
-addChildren nf@(Node (Field _ _)  _) _  = nf
-addChildren (Node h@(Object _ _) hs) ks = Node h (hs ++ ks)
+addChildren t cs = changeChildren (++cs) t

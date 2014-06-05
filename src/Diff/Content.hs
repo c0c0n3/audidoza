@@ -1,8 +1,9 @@
-{-# LANGUAGE UnicodeSyntax, TypeFamilies, FlexibleContexts #-}
+{-# LANGUAGE UnicodeSyntax #-}
+{-# LANGUAGE TypeFamilies, FlexibleContexts, FlexibleInstances #-}
 module Diff.Content where
 
 import Prelude.Unicode
-
+import Data.Tree.Class
 
 
 --
@@ -17,3 +18,14 @@ class ContentNode ξ where
     
     nodeId  ∷ Ord (Id ξ)  ⇒ ξ → Id ξ
     payload ∷ Eq (Data ξ) ⇒ ξ → Data ξ
+
+--
+-- convenience: direct access to label from node
+--
+instance (ContentNode ξ, Tree t) ⇒ ContentNode (t ξ) where
+
+    type Id (t ξ)   = Id ξ
+    type Data (t ξ) = Data ξ
+
+    nodeId  = nodeId  ∘ getNode
+    payload = payload ∘ getNode

@@ -57,6 +57,6 @@ t2 = mkO "root" 1
        ]
      ]
 
-show_t1 = printTree t1
-show_t2 = printTree t2
-show_diff_t1_t2 = printTree $ diff t1 t2
+show_t1 = printTreeC t1
+show_t2 = printTreeC t2
+show_diff_t1_t2 = printTreeC $ diff t1 t2
