@@ -1,5 +1,5 @@
 {-# LANGUAGE UnicodeSyntax #-}
-{-# LANGUAGE TypeFamilies, FlexibleContexts, FlexibleInstances #-}
+{-# LANGUAGE TypeFamilies, FlexibleContexts, FlexibleInstances, MultiParamTypeClasses #-}
 module Diff.Content where
 
 import Prelude.Unicode
@@ -29,3 +29,8 @@ instance (ContentNode ξ, Tree t) ⇒ ContentNode (t ξ) where
 
     nodeId  = nodeId  ∘ getNode
     payload = payload ∘ getNode
+
+--
+-- interface for a tree made up of content nodes
+--
+class (Functor t, Tree t, ContentNode ξ, Ord (Id ξ), Eq (Data ξ)) ⇒ ContentTree t ξ

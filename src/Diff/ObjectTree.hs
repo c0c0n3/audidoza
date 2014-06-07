@@ -1,5 +1,5 @@
 {-# LANGUAGE UnicodeSyntax #-}
-{-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE TypeFamilies, MultiParamTypeClasses #-}
 --
 -- ObjectTree = tree representation of input xml 
 -- input xml  = xml representation of object tree that was saved in Billdoza
@@ -53,6 +53,8 @@ instance ContentNode ObjectNode where
 
 
 type ObjectTree = NTree ObjectNode
+instance ContentTree NTree ObjectNode
+
 
 field ∷ Text → Text → ObjectTree
 field name value = NTree (Field name value) []
