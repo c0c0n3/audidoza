@@ -18,12 +18,12 @@ import Diff.ObjectTree
 
 
 
-fromXmlTree ∷ (Tree t, XmlNode ξ) ⇒ t ξ → ObjectTree
+fromXmlTree ∷ (Tree t, XmlNode ξ) ⇒ t ξ → ObjectTree t
 fromXmlTree t = build root t 
     where
     root = objectNode t []  -- force a root, even if there's no object id 
 
-build ∷ (Tree t, XmlNode ξ) ⇒ ObjectTree → t ξ → ObjectTree
+build ∷ (Tree t, XmlNode ξ) ⇒ ObjectTree t → t ξ → ObjectTree t
 build p t | isObjectTag t = φ (objectNode t [])
           | isFieldTag t  = field (tagName t) (tagText t)
           | otherwise     = φ p
@@ -31,7 +31,7 @@ build p t | isObjectTag t = φ (objectNode t [])
     φ k = k `addChildren` (map (build k) (getChildren t))
 
 
-objectNode ∷ (Tree t, XmlNode ξ) ⇒ t ξ → ([ObjectTree] → ObjectTree)
+objectNode ∷ (Tree t, XmlNode ξ) ⇒ t ξ → ([ObjectTree t] → ObjectTree t)
 objectNode = uncurry object ∘ (tagName &&& (fromMaybe 0 ∘ findObjectId))
 
 objectId ∷ (Tree t, XmlNode ξ) ⇒ t ξ → Integer

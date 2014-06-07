@@ -41,7 +41,7 @@ import Diff.ObjectTree
  </className>
 
 -}
-parse ∷ ArrowXml hom ⇒ hom XmlTree ObjectTree
+parse ∷ (Tree t, ArrowXml hom) ⇒ hom XmlTree (ObjectTree t)
 parse = choiceA 
       [ isObjectElement    :-> parseObject
       , isContainerElement :-> (getChildren ⋙ parse)
@@ -52,7 +52,7 @@ parse = choiceA
     isContainerElement = getChildren ⋙ isElem
 
 
-parseObject ∷ ArrowXml hom ⇒ hom XmlTree ObjectTree
+parseObject ∷ (Tree t, ArrowXml hom) ⇒ hom XmlTree (ObjectTree t)
 parseObject = (classAndEntityId ⋙ toObjectNode) &&& (listA $ objectProps ⋙ parse)
             ⋙ (arr $ uncurry ($))
     where  
@@ -60,20 +60,20 @@ parseObject = (classAndEntityId ⋙ toObjectNode) &&& (listA $ objectProps ⋙ p
 
 
 type ClassAndEntityId = (String, String)
-toObjectNode ∷ ArrowXml hom ⇒ hom ClassAndEntityId ([ObjectTree] → ObjectTree)
+toObjectNode ∷ (Tree t, ArrowXml hom) ⇒ hom ClassAndEntityId ([ObjectTree t] → ObjectTree t)
 toObjectNode = arr $ (uncurry object) ∘ (Text.pack *** parseInt)
     where
     parseInt d = if (all isDigit d) then read d else (-1)
 
 
-parseField ∷ ArrowXml hom ⇒ hom XmlTree ObjectTree
+parseField ∷ (Tree t, ArrowXml hom) ⇒ hom XmlTree (ObjectTree t)
 parseField = fieldNameAndValue ⋙ toFieldNode
     where
     fieldNameAndValue = getName &&& deep getText
 
 
 type NameValue = (String, String)
-toFieldNode ∷ ArrowXml hom ⇒ hom NameValue ObjectTree
+toFieldNode ∷ (Tree t, ArrowXml hom) ⇒ hom NameValue (ObjectTree t)
 toFieldNode = arr $ (uncurry field) ∘ (Text.pack *** Text.pack)
 
 

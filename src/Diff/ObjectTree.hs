@@ -1,5 +1,5 @@
 {-# LANGUAGE UnicodeSyntax #-}
-{-# LANGUAGE TypeFamilies, MultiParamTypeClasses #-}
+{-# LANGUAGE TypeFamilies, MultiParamTypeClasses, FlexibleInstances #-}
 --
 -- ObjectTree = tree representation of input xml 
 -- input xml  = xml representation of object tree that was saved in Billdoza
@@ -8,7 +8,6 @@ module Diff.ObjectTree
     ( ObjectTree
     , field
     , object
-    , name
     , addChildren
     )
 where
@@ -17,7 +16,6 @@ import Prelude.Unicode
 import Data.Text (Text)
 import qualified Data.Text as Text
 import Data.Tree.Class
-import Data.Tree.NTree.TypeDefs
 
 import Diff.Content
 
@@ -52,19 +50,15 @@ instance ContentNode ObjectNode where
     payload (Object _ _ ) = Text.empty
 
 
-type ObjectTree = NTree ObjectNode
-instance ContentTree NTree ObjectNode
+type ObjectTree t = t ObjectNode
+instance (Functor t, Tree t) ⇒ ContentTree t ObjectNode
 
 
-field ∷ Text → Text → ObjectTree
-field name value = NTree (Field name value) []
+field ∷ Tree t ⇒ Text → Text → ObjectTree t
+field name value = mkTree (Field name value) []
 
-object ∷ Text → Integer → ([ObjectTree] → ObjectTree)
-object className entityId = NTree (Object className entityId)
+object ∷ Tree t ⇒ Text → Integer → ([ObjectTree t] → ObjectTree t)
+object className entityId = mkTree (Object className entityId)
 
-name ∷ ObjectTree → Text
-name (NTree (Field n _)  _) = n
-name (NTree (Object c _) _) = c
-
-addChildren ∷ ObjectTree → [ObjectTree] → ObjectTree
+addChildren ∷ Tree t ⇒ ObjectTree t → [ObjectTree t] → ObjectTree t
 addChildren t cs = changeChildren (++cs) t
