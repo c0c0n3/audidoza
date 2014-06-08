@@ -11,9 +11,7 @@ import HxtUtil
 import TreeUtil
 
 import Diff.ObjectTree
-import ExtRep.ObjectTreeBuilder
-import ExtRep.ObjectTreeSerializer
-
+import ExtRep.XmlToObjectTree
 
 
 
@@ -76,11 +74,12 @@ xt2 = [here|
         </seqOfY>
     </root>
 |]
-  
-show_xt1 = xrun this xt1
-show_parse_xt1 = printNTree ∘ head ∘ run parse $ xt1
-show_parse_xt1' = printNTree ∘ fromXmlTree ∘ head ∘ run (hasName "root") $ xt1
 
-show_xt2 = xrun this xt2
-show_parse_xt2 = printNTree ∘ head ∘ run parse $ xt2
-show_parse_xt2' = printNTree ∘ fromXmlTree ∘ head ∘ run (hasName "root") $ xt2
+showX = xrun this
+showP = printNTree ∘ fromXml ∘ head ∘ run (hasName "root")
+
+show_xt1 = showX xt1
+show_parse_xt1 = showP xt1
+
+show_xt2 = showX xt2
+show_parse_xt2 = showP xt2
