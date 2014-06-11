@@ -9,6 +9,7 @@
 --
 module Diff.DiffTree 
     ( DiffNode(..)
+    , diffContentNodeId
     , DiffTree
     , diff
     )
@@ -33,6 +34,12 @@ instance Show ξ ⇒ Show (DiffNode ξ) where
     show (Deleted n)   = "- " ++ show n
     show (Unchanged n) = "= " ++ show n
     show (Changed m n) = "* " ++ show m ++ " |~~> " ++ show n 
+
+diffContentNodeId ∷ (ContentNode ξ, Ord (Id ξ)) ⇒ DiffNode ξ → Id ξ
+diffContentNodeId (New x)       = nodeId x
+diffContentNodeId (Deleted x)   = nodeId x
+diffContentNodeId (Unchanged x) = nodeId x
+diffContentNodeId (Changed x _) = nodeId x
 
 
 type DiffTree t ξ = t (DiffNode ξ)

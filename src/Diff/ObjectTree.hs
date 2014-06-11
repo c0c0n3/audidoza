@@ -46,8 +46,11 @@ instance ContentNode ObjectNode where
     
     nodeId = id
     
-    payload (Field _ v)   = v
-    payload (Object _ _ ) = Text.empty
+    nodeName (Field n _)  = n
+    nodeName (Object n _) = n
+
+    payload (Field _ v)  = v
+    payload (Object _ i) = Text.pack ∘ show $ i
 
 
 type ObjectTree t = t ObjectNode
