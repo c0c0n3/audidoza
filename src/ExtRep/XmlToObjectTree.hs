@@ -16,8 +16,6 @@ import Util.Hxt
 
 
 
-type XTree t ξ = (Tree t, XmlNode ξ)
-
 {-
  Transform: XML into ObjectTree.
  Result will be faithful representation of input as long as XML looks like this:

@@ -14,7 +14,7 @@ import qualified Text.XML.HXT.DOM.ShowXml as XS
 
 
 toTree ∷ ArrowXml cat ⇒ String → cat ξ XmlTree
-toTree xml = constA xml ⋙ xread
+toTree xml = constA xml ⋙ xreadDoc
 
 xfilter :: ArrowXml hom ⇒ hom XmlTree XmlTree → String → hom ξ String
 xfilter f xml = xshow (toTree xml ⋙ f ⋙ indentDoc)
@@ -26,7 +26,7 @@ xrun f xml = (runX $ xfilter f xml) >>=  printL
 
 -- same as xfilter but input string is actually used (i.e. no constA)
 xtran :: ArrowXml hom ⇒ hom XmlTree XmlTree → hom String String
-xtran f = xshow $ xread ⋙ f ⋙ indentDoc
+xtran f = xshow $ xreadDoc ⋙ f ⋙ indentDoc
 
 -- same as xrun but in LA (list arrow) only
 xrun' :: LA XmlTree XmlTree → String → IO ()

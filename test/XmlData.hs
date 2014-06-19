@@ -6,8 +6,15 @@ import Text.Heredoc
 
 
 
+et1 = [here|
+    <?xml version="1.0"?> <!-- parse error, doc begins with whitespace -->
+    <root> 
+        <id>1</id>
+        <r1>r1</r1>
+    </root>
+|]
 
-xt1 = [here|
+xt1 = [here|<?xml version="1.0"?>
     <root>
         <id>1</id>
         <r1>r1</r1>
