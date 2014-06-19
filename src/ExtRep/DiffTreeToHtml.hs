@@ -1,13 +1,17 @@
 {-# LANGUAGE UnicodeSyntax, OverloadedStrings #-}
-{-# LANGUAGE FlexibleContexts, ConstraintKinds #-}
-module ExtRep.DiffTreeToHtml --(toHtml5) where
-where
+{-# LANGUAGE FlexibleContexts, ConstraintKinds, TypeSynonymInstances, FlexibleInstances #-}
+--
+-- implements ToMarkup for diff tree so that you can call Blaze toHtml on a
+-- diff tree.
+--
+module ExtRep.DiffTreeToHtml (RenderableTree) where
 
 import Prelude.Unicode
 import Control.Monad
 import Data.List
 import Data.Ord
 import Data.Tree.Class
+import Text.Blaze (toValue)
 import Text.Blaze.Html5
 import Text.Blaze.Html5.Attributes
 import qualified Text.Blaze.Html5 as H
@@ -17,7 +21,7 @@ import Diff.Content
 import Diff.DiffTree
 
 
-
+-- convenience constraint synonym
 type RenderableTree t ξ = (ContentTree t ξ, ToMarkup (Data ξ))
 
 {- 
@@ -37,22 +41,23 @@ produce an HTML ul structure to mirror input tree, e.g.
 
 li text = rendered content node; rendering as follows:
 
-   <span class="unchanged">              (or new or deleted)
+   <span class="unchanged inner">     (or new or deleted; inner|leaf to indicate node depth)
          <span class="nodeName">…</span>
          <span class="payload">…</span>
    </span>
 
 for Unchanged, New, or Deleted diff node.  Changed diff node rendered as:
 
-    <span class="changed">
+    <span class="changed leaf">          (or inner)
           <span class="nodeName">…</span>
           <span class="payload">…</span>
           <span class="newPayload">…</span>
     </span>
 
 -}
-toHtml5 ∷ RenderableTree t ξ ⇒ DiffTree t ξ → Html
-toHtml5 t = renderForest [t]
+instance RenderableTree t ξ ⇒ ToMarkup (DiffTree t ξ) where
+    toMarkup t = renderForest [t]  -- NB Blaze toHtml function is an alias for this:
+                                   -- type Html = Markup, toHtml = toMarkup
 
 renderTree ∷ RenderableTree t ξ ⇒ DiffTree t ξ → Html
 renderTree t = li (renderNode t >> renderForest (getChildren t))
@@ -64,16 +69,18 @@ renderForest ts = ul $ mapM_ renderTree (sortBy cmp ts)
     cmp = comparing (diffContentNodeId ∘ getNode)
 
 renderNode ∷ RenderableTree t ξ ⇒ DiffTree t ξ → Html
-renderNode = item ∘ getNode
+renderNode t = item ∘ getNode $ t
     where
-    item (New x)           = wrap "new" x
-    item (Deleted x)       = wrap "deleted" x
-    item (Unchanged x)     = wrap "unchanged" x
-    item (Changed old new) = mkSpan "changed" $ 
-                             (mkNameValueSpan old >> mkSpanH "newPayload" (payload new))
+    nic ∷ String → AttributeValue   -- node indicator class
+    nic clazz = toValue $ (clazz++) $ if isLeaf t then " leaf" else " inner"  
     
+    item (New x)           = wrap (nic "new") x
+    item (Deleted x)       = wrap (nic "deleted") x
+    item (Unchanged x)     = wrap (nic "unchanged") x
+    item (Changed old new) = mkSpan (nic "changed") $ 
+                             (mkNameValueSpan old >> mkSpanH "newPayload" (payload new))
+
     mkSpan clazz = H.span ! class_ clazz
     mkSpanH clazz content = mkSpan clazz $ (toHtml content)
     mkNameValueSpan x = mkSpanH "nodeName" (nodeName x) >> mkSpanH "payload" (payload x)
     wrap clazz x = mkSpan clazz $ mkNameValueSpan x
-
