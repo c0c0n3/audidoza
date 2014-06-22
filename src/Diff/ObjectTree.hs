@@ -5,7 +5,8 @@
 -- input xml  = xml representation of object tree that was saved in Billdoza
 --
 module Diff.ObjectTree 
-    ( ObjectTree
+    ( ObjectNode
+    , ObjectTree
     , field
     , object
     , addChildren
