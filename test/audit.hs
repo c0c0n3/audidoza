@@ -4,26 +4,21 @@ module Test where
 import Prelude.Unicode
 import Data.Maybe
 import qualified Data.Text as Text
-import Data.Time
-import Data.Time.Clock.POSIX
+
+import Audit.History
+import Audit.ObjectHistory
+import Util.Time
 
 import TreeUtil
 import XmlData
 
-import Audit.History
-import Audit.ObjectHistory
 
 
-
-
-secondsFromEpoc ∷ Integer → UTCTime
-secondsFromEpoc = posixSecondsToUTCTime ∘ fromIntegral
 
 objKey = mkObjectHistoryLineKey "root" 1
 addChange history username xml = auditChange history objKey 
                                $ userChange username epoc (Text.pack xml) 
-    where
-    epoc = secondsFromEpoc 0
+
 
 h₁ = addChange emptyChangeHistory "u1" xt1
 h₂ = addChange h₁ "u2" xt2
