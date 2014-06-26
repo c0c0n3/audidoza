@@ -37,6 +37,7 @@ import Util.Hxt
 data ObjectAudit = NewObject { newState  ∷ Text } 
                  | ModObject { prevState ∷ Text, curState ∷ Text }
                  | DelObject { delState  ∷ Text }
+                 deriving Show
 
 type VersionedObject = VersionedChange ObjectAudit
 type ObjectHistory   = ChangeHistory ObjectNode ObjectAudit
@@ -75,7 +76,7 @@ describeChangeTree ∷ VersionedObject → AuditTreeDelta
 describeChangeTree = uncurry diff ∘ prevAndCurrentTrees ∘ auditedContent ∘ changeItem 
     where
     prevAndCurrentTrees (NewObject x)     = (fromText "", fromText x)
-    prevAndCurrentTrees (ModObject x₁ x₂) = (fromText x₁, fromText x₁)
+    prevAndCurrentTrees (ModObject x₁ x₂) = (fromText x₁, fromText x₂)
     prevAndCurrentTrees (DelObject x)     = (fromText x, fromText "")
 
 fromText ∷ Text → AuditTree
