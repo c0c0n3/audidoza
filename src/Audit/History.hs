@@ -2,11 +2,15 @@
 module Audit.History 
     ( UserChange
     , userChange
+    , username
+    , timeOfChange
     , auditedContent
     , VersionedChange
     , versionNumber
     , changeItem
     , ChangeHistory
+    , changeHistory
+    , historyLines
     , emptyChangeHistory
     , pushChange
     , historyLine
@@ -51,8 +55,12 @@ newtype ChangeHistory κ γ =
                       }
                       deriving Show
 
+changeHistory ∷ Ord κ ⇒ Map κ [VersionedChange γ] → ChangeHistory κ γ
+changeHistory = ChangeHistory
+
 emptyChangeHistory ∷ ChangeHistory κ γ
 emptyChangeHistory = ChangeHistory Map.empty
+
 
 pushChange ∷ Ord κ ⇒ ChangeHistory κ γ → κ → UserChange γ → ChangeHistory κ γ
 pushChange (ChangeHistory h) contentKey change = 
