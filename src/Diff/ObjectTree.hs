@@ -7,6 +7,7 @@
 module Diff.ObjectTree 
     ( ObjectNode
     , ObjectTree
+    , mkEntityKey
     , field
     , object
     , addChildren
@@ -57,6 +58,8 @@ instance ContentNode ObjectNode where
 type ObjectTree t = t ObjectNode
 instance (Functor t, Tree t) ⇒ ContentTree t ObjectNode
 
+mkEntityKey ∷ Text → Integer → ObjectNode
+mkEntityKey = Object
 
 field ∷ Tree t ⇒ Text → Text → ObjectTree t
 field name value = mkTree (Field name value) []
