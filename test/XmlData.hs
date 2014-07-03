@@ -2,8 +2,10 @@
 module XmlData where
 
 import Prelude.Unicode
+--import Data.Text (Text)
+import Data.Text.Lazy (Text, toStrict)
 import Text.Heredoc
-
+import Text.Shakespeare.Text
 
 
 et1 = [here|
@@ -73,4 +75,55 @@ xt2 = [here|
         </seqOfY>
     </root>
 |]
+
+
+mkAuditXml ∷ String → Int → String → Int → Text → Text
+mkAuditXml usr millis className entityId contentXml = [lt|<?xml version="1.0"?>
+    <editAction>
+        <userName>#{usr}</userName>
+        <timeOfChange>#{millis}</timeOfChange> <!-- millis from epoc -->
+        <entityKey>
+            <className>#{className}</className>
+            <persistentId>#{entityId}</persistentId>
+        </entityKey>
+        #{contentXml}
+    </editAction>
+|]
+
+mkNewContentXml ∷ String → Text
+mkNewContentXml x = [lt|
+    <newContent>
+        <newState>
+            #{x}
+        </newState>
+    </newContent>
+|]
+
+mkModContentXml ∷ String → String → Text
+mkModContentXml x x' = [lt|
+    <modifiedContent>
+        <oldState>
+            #{x}
+        </oldState>
+        <newState>
+            #{x'}
+        </newState>
+    </modifiedContent>
+|]
+
+mkDelContentXml ∷ String → Text
+mkDelContentXml x = [lt|
+    <deletedContent>
+        <oldState>
+            #{x}
+        </oldState>
+    </deletedContent>
+|]
+
+xuc1 = toStrict $ 
+       mkAuditXml "u1" 10 "root" 1 $ mkNewContentXml (drop 22 xt1)  -- gets rid of xml decl in xt1
+xuc2 = toStrict $
+       mkAuditXml "u2" 20 "root" 1 $ mkModContentXml (drop 22 xt1) xt2
+xuc3 = toStrict $
+       mkAuditXml "u3" 30 "root" 1 $ mkDelContentXml xt2 
 

@@ -18,6 +18,7 @@ import qualified Html.DiffJstPage as DiffJstPage
 import Diff.DiffTree
 import Diff.ObjectTree
 import ExtRep.DiffTreeToHtml
+import ExtRep.XmlToObjectEdit
 import ExtRep.XmlToObjectTree
 import Util.Hxt
 
@@ -49,3 +50,7 @@ show_diff_t1_t2 = printNTree diff_t1_t2
 show_html_diff_t1_t2 = putStr ∘ renderHtml ∘ toHtml $ diff_t1_t2 
 show_htmlpage_diff_t1_t2 = DiffPage.printHtml t1 t2
 show_jstpage_diff_t1_t2 = DiffJstPage.printHtml diff_t1_t2 
+
+parsed_xuc1 = parseObjectEdit xuc1
+parsed_xuc2 = parseObjectEdit xuc2
+parsed_xuc3 = parseObjectEdit xuc3
