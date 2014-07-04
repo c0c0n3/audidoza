@@ -1,0 +1,88 @@
+<xs:schema 
+    attributeFormDefault="unqualified" 
+    elementFormDefault="qualified"
+    targetNamespace="http://billdoza.co.za/audit/v1"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://billdoza.co.za/audit/v1">
+
+  <xs:annotation>
+   <xs:documentation>
+     An edit action represents a create, modify, or delete action some user performed on
+     some persistent object.  This action is recorded using the elements making up the
+     editAction as follows:
+     
+       * userName: the user name of the user who performed the action.
+
+       * timeOfChange: when the action was performed as a number of milliseconds from
+           the Unix epoc.
+
+       * entityKey: uniquely identifies the object that was created, modified, or deleted.
+           The className element should be set to the fully qualified class name of the
+           object; persistentId should be the primary key of the object in the DB.
+
+       * content: the object data serialized to XML.  Depending on the action, the data
+           is stored as follows:
+           
+           * create. The new object is stored as a child of newContent/newState; the data
+               should be exactly what the user saved to the DB. 
+           * modify. The modifiedContent/oldState should contain the object as presented
+               to the user before she modified it; modifiedContent/newState should be the
+               modified state the user saved to the DB.
+           * delete. The deleted object is stored as a child of deletedContent/oldState;
+               the data should be exactly what the user saw before deleting.
+
+   </xs:documentation>
+ </xs:annotation>
+
+  <xs:element name="editAction">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="userName" type="xs:string" />
+        <xs:element name="timeOfChange" type="xs:positiveInteger" />
+        <xs:element name="entityKey" type="EntityKey" />
+        <xs:element name="content" type="Content" />
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="EntityKey">
+    <xs:all>
+      <xs:element name="className" type="xs:string" />
+      <xs:element name="persistentId" type="xs:positiveInteger" />
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="Content">
+    <xs:choice>
+      <xs:element name="newContent">
+        <xs:complexType>
+          <xs:all>
+             <xs:element name="newState" type="ObjectState" />
+          </xs:all>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="modifiedContent">
+        <xs:complexType>
+          <xs:all>
+             <xs:element name="oldState" type="ObjectState" />
+             <xs:element name="newState" type="ObjectState"/>
+          </xs:all>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="deletedContent">
+        <xs:complexType>
+          <xs:all>
+             <xs:element name="oldState" type="ObjectState" />
+          </xs:all>
+        </xs:complexType>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="ObjectState">
+    <xs:sequence>
+      <xs:any processContents="lax" />
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

@@ -79,14 +79,16 @@ xt2 = [here|
 
 mkAuditXml ∷ String → Int → String → Int → Text → Text
 mkAuditXml usr millis className entityId contentXml = [lt|<?xml version="1.0"?>
-    <editAction>
+    <editAction xmlns="http://billdoza.co.za/audit/v1">
         <userName>#{usr}</userName>
         <timeOfChange>#{millis}</timeOfChange> <!-- millis from epoc -->
         <entityKey>
             <className>#{className}</className>
             <persistentId>#{entityId}</persistentId>
         </entityKey>
-        #{contentXml}
+        <content>
+            #{contentXml}
+        </content>
     </editAction>
 |]
 
