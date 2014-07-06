@@ -1,0 +1,15 @@
+ext-rep.hs: showX (Text.unpack xuc1) ~~> xuc1.xml
+            showX (Text.unpack xuc2) ~~> xuc2.xml
+            showX (Text.unpack xuc3) ~~> xuc3.xml
+
+
+cd test
+curl -d @xuc1.xml \
+     --header "Content-Type:application/xml" \
+     http://localhost:3000/audits
+
+curl http://localhost:3000/audits/versions/id/1
+
+curl http://localhost:3000/audits/keys
+
+curl http://localhost:3000/audits/versions/entity/root~1/last/100

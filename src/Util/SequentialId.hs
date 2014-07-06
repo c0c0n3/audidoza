@@ -19,7 +19,7 @@ import Data.Text.Read
 
 -- opaque id; succ function gives next id from old.
 newtype SeqId = SeqId { unSeqId ∷ Integer } 
-                deriving (Eq, Ord, Enum, Show, Data, Typeable)
+                deriving (Eq, Ord, Enum, Read, Show, Data, Typeable)
 
 seqIdSeed = SeqId 0  -- we only allow to generate values from 1 on
                      -- if needed, this value could be used as ⊥

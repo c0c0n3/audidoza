@@ -3,7 +3,8 @@ module Main where
 
 import Prelude.Unicode
 
+import Service.Runner
 
 
-main :: IO ()
-main = putStrLn "Hi there!"
+main ∷ IO ()
+main = run
