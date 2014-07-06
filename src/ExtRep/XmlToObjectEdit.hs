@@ -4,13 +4,14 @@ module ExtRep.XmlToObjectEdit (parseObjectEdit) where
 import Prelude.Unicode
 import Control.Arrow.Unicode
 
+import Data.Maybe
 import Data.Text (Text)
 import Data.Time
 import Text.XML.HXT.Core
 
 import Audit.EditAction
 import Audit.ObjectHistory
-import Diff.ObjectTree
+import Util.EntityKey
 import Util.Hxt
 import Util.Time
 
@@ -49,12 +50,13 @@ user = textOf "userName"
 time ∷ ArrowXml hom ⇒ hom XmlTree  UTCTime
 time = integerOf "timeOfChange" ⋙ arr millisFromEpoc
 
-entityKey ∷ ArrowXml hom ⇒ hom XmlTree ObjectNode
+entityKey ∷ ArrowXml hom ⇒ hom XmlTree EntityKey
 entityKey = findTag "entityKey" 
           ⋙ (deep $ textOf "className") &&& (deep $ integerOf "persistentId")
           ⋙ arr2 mkEntityKey
+          >>. catMaybes
 
-metadata ∷ ArrowXml hom ⇒ hom XmlTree (Text, (UTCTime, ObjectNode))
+metadata ∷ ArrowXml hom ⇒ hom XmlTree (Text, (UTCTime, EntityKey))
 metadata = deep user &&& deep time &&& deep entityKey
 
 data WhichState = NewS | OldS

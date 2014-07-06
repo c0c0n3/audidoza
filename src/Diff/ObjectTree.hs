@@ -7,7 +7,6 @@
 module Diff.ObjectTree 
     ( ObjectNode
     , ObjectTree
-    , mkEntityKey
     , field
     , object
     , addChildren
@@ -15,32 +14,34 @@ module Diff.ObjectTree
 where
 
 import Prelude.Unicode
+import Data.Maybe
 import Data.Text (Text)
 import qualified Data.Text as Text
 import Data.Tree.Class
 
 import Diff.Content
+import Util.EntityKey
 
 
 
 
 data ObjectNode = Field  { fieldName ∷ Text, fieldValue ∷ Text }
-                | Object { className ∷ Text, entityId ∷ Integer }
+                | Object EntityKey
 
 instance Show ObjectNode where
-    show (Field n v)  = Text.unpack n ++ " : " ++ Text.unpack v
-    show (Object c i) = Text.unpack c ++ " # " ++ show i 
+    show (Field n v) = Text.unpack n ++ " : " ++ Text.unpack v
+    show (Object k)  = show k 
 
 instance Eq ObjectNode where
-    (Field m _)  == (Field n _)  = m ≡ n
-    (Object c i) == (Object d j) = (c, i) ≡ (d, j)
-    _            == _            = False
+    (Field m _) == (Field n _) = m ≡ n
+    (Object h)  == (Object k)  = h ≡ k
+    _            == _          = False
 
 instance Ord ObjectNode where
-    compare (Field m _) (Field n _)   = compare m n
-    compare (Field _ _) (Object _ _)  = LT
-    compare (Object _ _) (Field _ _)  = GT
-    compare (Object c i) (Object d j) = compare (c, i) (d, j)
+    compare (Field m _) (Field n _) = compare m n
+    compare (Field _ _) (Object _)  = LT
+    compare (Object _) (Field _ _)  = GT
+    compare (Object h) (Object k)   = compare h k
 
 instance ContentNode ObjectNode where
     type Id ObjectNode = ObjectNode
@@ -48,24 +49,23 @@ instance ContentNode ObjectNode where
     
     nodeId = id
     
-    nodeName (Field n _)  = n
-    nodeName (Object n _) = n
+    nodeName (Field n _) = n
+    nodeName (Object k)  = className k
 
     payload (Field _ v)  = v
-    payload (Object _ i) = Text.pack ∘ show $ i
+    payload (Object k)   = Text.pack ∘ show ∘ entityId $ k
 
 
 type ObjectTree t = t ObjectNode
 instance (Functor t, Tree t) ⇒ ContentTree t ObjectNode
 
-mkEntityKey ∷ Text → Integer → ObjectNode
-mkEntityKey = Object
-
 field ∷ Tree t ⇒ Text → Text → ObjectTree t
 field name value = mkTree (Field name value) []
 
 object ∷ Tree t ⇒ Text → Integer → ([ObjectTree t] → ObjectTree t)
-object className entityId = mkTree (Object className entityId)
+object className entityId = mkTree (Object entityKey)
+    where
+    entityKey = fromMaybe btmEntityKey $ mkEntityKey className entityId
 
 addChildren ∷ Tree t ⇒ ObjectTree t → [ObjectTree t] → ObjectTree t
 addChildren t cs = changeChildren (++cs) t

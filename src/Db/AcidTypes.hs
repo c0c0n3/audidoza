@@ -13,15 +13,14 @@ import Audit.ContentHistory
 import Audit.EditAction
 import Audit.ObjectHistory
 import Audit.VersionedChange
-import Diff.ObjectTree
+import Util.EntityKey
 import Util.SequentialId
 
 
 
-deriving instance Typeable ObjectNode
 
 $(deriveSafeCopy 0 'base ''SeqId)
-$(deriveSafeCopy 0 'base ''ObjectNode)
+$(deriveSafeCopy 0 'base ''EntityKey)
 $(deriveSafeCopy 0 'base ''Edit)
 $(deriveSafeCopy 0 'base ''EditAction)
 $(deriveSafeCopy 0 'base ''VersionedChange)

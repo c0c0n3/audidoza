@@ -18,14 +18,15 @@ import Audit.VersionedChange
 import Diff.DiffTree
 import Diff.ObjectTree
 import ExtRep.XmlToObjectTree
+import Util.EntityKey (EntityKey)
 import Util.Hxt
 
 
 
 
-type ObjectEdit      = EditAction ObjectNode Text
-type VersionedObject = VersionedChange ObjectNode Text
-type ObjectHistory   = ContentHistory ObjectNode Text
+type ObjectEdit      = EditAction EntityKey Text
+type VersionedObject = VersionedChange EntityKey Text
+type ObjectHistory   = ContentHistory EntityKey Text
 
 type AuditTree       = ObjectTree NTree
 type AuditTreeDelta  = DiffTree NTree ObjectNode

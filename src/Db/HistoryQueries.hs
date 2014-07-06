@@ -14,14 +14,13 @@ import Data.Acid
 import Audit.ContentHistory
 import Audit.ObjectHistory
 import Audit.VersionedChange
-import Diff.ObjectTree
-
+import Util.EntityKey
 
 
 
 
 type VersionsCount = Integer
-allEntityKeys ∷ Query ObjectHistory [(ObjectNode, VersionsCount)]
+allEntityKeys ∷ Query ObjectHistory [(EntityKey, VersionsCount)]
 allEntityKeys = do
                 db ← ask
                 return $ map (count db) ∘ historyLineKeys $ db
@@ -29,7 +28,7 @@ allEntityKeys = do
     count db k = (k, countVersions k db)
 
 
-selectHistoryLine ∷ Int → ObjectNode → Query ObjectHistory [AuditId]
+selectHistoryLine ∷ Int → EntityKey → Query ObjectHistory [AuditId]
 selectHistoryLine limit entityKey = 
                   do
                   db ← ask
