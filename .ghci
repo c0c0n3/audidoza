@@ -1,3 +1,4 @@
-:set -i.:config:dist/build/autogen
+:set prompt "λ "
+:set -i.:config:dist/build/autogen:app:tests/app
 :set -DDEVELOPMENT
 :set -XCPP -XTemplateHaskell -XQuasiQuotes -XTypeFamilies -XFlexibleContexts -XGADTs -XOverloadedStrings -XMultiParamTypeClasses -XGeneralizedNewtypeDeriving -XEmptyDataDecls -XDeriveDataTypeable
