@@ -1,5 +1,7 @@
 name:              audidoza
-version:           0.0.0
+version:           0.1.0.0
+synopsis:          Auditing of object trees.
+author:            Andrea Falconi
 cabal-version:     >= 1.8
 build-type:        Simple
 
@@ -63,6 +65,21 @@ library
                  , monad-logger                  >= 0.3        && < 0.4
                  , fast-logger                   >= 2.1.4      && < 2.2
                  , wai-logger                    >= 2.1        && < 2.2
+                 
+                 , base-unicode-symbols          >= 0.2        && < 0.3
+                 , ixset-typed                   >= 0.2        && < 0.3
+                 , containers                    >= 0.5        && < 0.6
+                 , time                          >= 1.4        && < 1.5
+                 , hxt                           >= 9.3        && < 9.4
+                 , safecopy                      >= 0.8        && < 0.9
+                 , acid-state                    >= 0.12       && < 0.13
+                 , mtl                           >= 2.1        && < 2.2
+                 , clay                          >= 0.9        && < 0.10
+                 , heredoc                       >= 0.2        && < 0.3
+                 , blaze-markup                  >= 0.6        && < 0.7
+                 , blaze-html                    >= 0.7        && < 0.8
+                 , conduit-extra                 >= 1.1        && < 1.2
+                 , old-locale                    >= 1.0        && < 1.1                 
 
 executable         audidoza
     if flag(library-only)
