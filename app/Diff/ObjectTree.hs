@@ -13,9 +13,8 @@ module Diff.ObjectTree
     )
 where
 
-import Prelude.Unicode
+import BaseImport
 import Data.Maybe
-import Data.Text (Text)
 import qualified Data.Text as Text
 import Data.Tree.Class
 

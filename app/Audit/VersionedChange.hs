@@ -12,10 +12,9 @@ module Audit.VersionedChange
     )
     where
 
-import Prelude.Unicode
+import BaseImport
 import Data.Data
 import Data.IxSet.Typed
-import Data.Text (Text)
 import Data.Time (UTCTime)
 
 import Audit.EditAction

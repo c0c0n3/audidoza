@@ -7,7 +7,7 @@ module Db.HistoryQueries
     )
     where
 
-import Prelude.Unicode
+import BaseImport
 import Control.Monad.Reader
 import Data.Acid
 

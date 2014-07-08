@@ -13,9 +13,8 @@ module Audit.EditAction
     )
     where
 
-import Prelude.Unicode
+import BaseImport
 import Data.Data
-import Data.Text (Text)
 import Data.Time
 
 

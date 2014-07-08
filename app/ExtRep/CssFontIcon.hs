@@ -4,9 +4,8 @@
 --
 module ExtRep.CssFontIcon (iconFontFace, mkFontIcon) where
 
-import Prelude.Unicode
+import BaseImport
 import Clay
-import Data.Text (Text)
 import Text.Heredoc
 
 

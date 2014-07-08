@@ -3,7 +3,7 @@
 {-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-}
 module Db.AuditStore where
 
-import Prelude.Unicode
+import BaseImport
 import Control.Exception
 import Data.Acid
 import Data.Acid.Local

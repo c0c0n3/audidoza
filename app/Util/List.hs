@@ -4,7 +4,7 @@ module Util.List
     )
 where
 
-import Prelude.Unicode
+import BaseImport
 import Data.List
 
 

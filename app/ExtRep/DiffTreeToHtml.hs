@@ -6,7 +6,7 @@
 --
 module ExtRep.DiffTreeToHtml (RenderableTree) where
 
-import Prelude.Unicode
+import BaseImport
 import Control.Monad
 import Data.List
 import Data.Ord

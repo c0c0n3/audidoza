@@ -1,7 +1,7 @@
 {-# LANGUAGE UnicodeSyntax #-}
 module Util.Time where
 
-import Prelude.Unicode
+import BaseImport
 import Data.Maybe
 import Data.Time
 import Data.Time.Clock.POSIX

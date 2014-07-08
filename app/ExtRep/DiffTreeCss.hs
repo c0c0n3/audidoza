@@ -4,11 +4,10 @@
 --
 module ExtRep.DiffTreeCss (stylesheet) where
 
-import Prelude.Unicode
+import BaseImport
 import Clay
 import Clay.Display
 import Data.Monoid
-import Data.Text (Text)
 import qualified Data.Text.Lazy.IO as TextIO
 
 import ExtRep.CssFontIcon

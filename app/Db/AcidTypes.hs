@@ -3,11 +3,10 @@
 {-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-}
 module Db.AcidTypes where
 
-import Prelude.Unicode
+import BaseImport
 import Control.Applicative
 import Data.Data
 import Data.SafeCopy
-import Data.Text (Text)
 
 import Audit.ContentHistory
 import Audit.EditAction

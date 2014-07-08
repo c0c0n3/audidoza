@@ -1,11 +1,8 @@
 {-# LANGUAGE UnicodeSyntax #-}
 module ExtRep.XmlToObjectEdit (parseObjectEdit) where
 
-import Prelude.Unicode
-import Control.Arrow.Unicode
-
+import BaseImport
 import Data.Maybe
-import Data.Text (Text)
 import Data.Time
 import Text.XML.HXT.Core
 

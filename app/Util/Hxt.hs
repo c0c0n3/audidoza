@@ -2,12 +2,8 @@
 {-# LANGUAGE ConstraintKinds #-}
 module Util.Hxt where
 
-
-import Prelude.Unicode
-import Control.Arrow.Unicode
-
+import BaseImport
 import Data.Maybe
-import Data.Text (Text)
 import qualified Data.Text as Text
 import Data.Text.Read
 import Data.Tree.Class (Tree)

@@ -13,7 +13,7 @@ module Audit.ContentHistory
     )
     where
 
-import Prelude.Unicode
+import BaseImport
 import qualified Control.Arrow as A
 import Data.Data
 import Data.IxSet.Typed

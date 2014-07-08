@@ -15,7 +15,7 @@ module Diff.DiffTree
     )
 where
 
-import Prelude.Unicode
+import BaseImport
 import Data.Ord
 import Data.Tree.Class
 import Data.Tree.NTree.TypeDefs

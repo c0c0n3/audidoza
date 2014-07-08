@@ -1,7 +1,7 @@
 {-# LANGUAGE UnicodeSyntax, OverloadedStrings, ConstraintKinds #-}
 module ExtRep.XmlToObjectTree (fromXml) where
 
-import Prelude.Unicode
+import BaseImport
 import Control.Monad
 import Data.List
 import Data.Maybe

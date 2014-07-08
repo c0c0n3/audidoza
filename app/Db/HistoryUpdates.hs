@@ -4,7 +4,7 @@ module Db.HistoryUpdates
     )
     where
 
-import Prelude.Unicode
+import BaseImport
 import Control.Monad.State
 import Data.Acid
 

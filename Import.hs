@@ -4,6 +4,9 @@ module Import
 
 import           Prelude              as Import hiding (head, init, last,
                                                  readFile, tail, writeFile)
+import Prelude.Unicode       as Import
+import Control.Arrow.Unicode as Import
+
 import           Yesod                as Import hiding (Route (..))
 
 import           Control.Applicative  as Import (pure, (<$>), (<*>))

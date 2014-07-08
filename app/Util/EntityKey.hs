@@ -11,12 +11,10 @@ module Util.EntityKey
     )
     where
 
-import Prelude
-import Prelude.Unicode
+import BaseImport
 import Data.Data
 import Data.Either
 import Data.List
-import Data.Text (Text)
 import qualified Data.Text as T 
 import Data.Text.Read
 

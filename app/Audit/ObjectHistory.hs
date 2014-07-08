@@ -8,8 +8,7 @@ module Audit.ObjectHistory
     )
     where
 
-import Prelude.Unicode
-import Data.Text (Text)
+import BaseImport
 import Data.Tree.NTree.TypeDefs
 
 import Audit.EditAction

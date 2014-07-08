@@ -9,8 +9,7 @@ module Util.SequentialId
     )
     where
 
-import Prelude hiding (null)
-import Prelude.Unicode
+import BaseImport hiding (null)
 import Data.Data
 import Data.Either
 import Data.Text

@@ -2,8 +2,7 @@
 {-# LANGUAGE TypeFamilies, FlexibleContexts, FlexibleInstances, MultiParamTypeClasses #-}
 module Diff.Content where
 
-import Prelude.Unicode
-import Data.Text (Text)
+import BaseImport
 import Data.Tree.Class
 
 
