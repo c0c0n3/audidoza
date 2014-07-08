@@ -4,6 +4,7 @@ Default: &defaults
   approot: "http://localhost:3000"
   copyright: Insert copyright statement here
   #analytics: UA-YOURCODE
+  auditStoreDir: "audit-db"
 
 Development:
   <<: *defaults

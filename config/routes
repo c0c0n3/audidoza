@@ -4,3 +4,8 @@
 /robots.txt RobotsR GET
 
 / HomeR GET POST
+
+/audits AuditsR POST
+/audits/keys KeysR GET
+/audits/versions/entity/#EntityKey/last/#Int HistoryLineR GET
+/audits/versions/id/#AuditId VersionR GET

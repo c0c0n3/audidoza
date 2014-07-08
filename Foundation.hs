@@ -1,6 +1,7 @@
 module Foundation where
 
 import Prelude
+import Data.Acid
 import Yesod
 import Yesod.Static
 import Yesod.Auth
@@ -16,6 +17,11 @@ import Text.Jasmine (minifym)
 import Text.Hamlet (hamletFile)
 import Yesod.Core.Types (Logger)
 
+import RouteTypes ()
+import Audit.VersionedChange (AuditId)
+import Db.AuditStore (AuditStore)
+import Util.EntityKey (EntityKey)
+
 -- | The site argument for your application. This can be a good place to
 -- keep settings and values requiring initialization before your application
 -- starts running, such as database connections. Every handler will have
@@ -25,6 +31,7 @@ data App = App
     , getStatic :: Static -- ^ Settings for static file serving.
     , httpManager :: Manager
     , appLogger :: Logger
+    , db :: AuditStore
     }
 
 instance HasHttpManager App where

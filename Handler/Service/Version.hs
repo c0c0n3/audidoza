@@ -1,26 +1,24 @@
 {-# LANGUAGE UnicodeSyntax #-}
 {-# LANGUAGE QuasiQuotes #-}
-module Service.Version (getVersionR) where
+module Handler.Service.Version (getVersionR) where
 
-import Prelude.Unicode
+import Import
 import Data.Acid.Advanced
 import Data.Maybe
 import Text.Blaze.Html (toHtml)
-import Yesod
 
 import Audit.EditAction
 import Audit.ObjectHistory
 import Audit.VersionedChange
 import Db.AuditStore
 import ExtRep.DiffTreeToHtml
-import Service.AuditService
 import Util.SequentialId
 import Util.Time
 
 
 
 
-getVersionR ∷ AuditId → Handlr Html
+getVersionR ∷ AuditId → Handler Html
 getVersionR auditId = do
                     mv ← findVersion auditId
                     case mv of
@@ -28,7 +26,7 @@ getVersionR auditId = do
                          Nothing → return $ renderNothing undefined
 
 
-findVersion ∷ AuditId → Handlr (Maybe VersionedObject)
+findVersion ∷ AuditId → Handler (Maybe VersionedObject)
 findVersion auditId = do 
                     app ← getYesod
                     v   ← query' (db app) $ SelectVersions [auditId]

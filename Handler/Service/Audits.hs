@@ -1,23 +1,20 @@
 {-# LANGUAGE UnicodeSyntax #-}
-module Service.Audits (postAuditsR) where
+module Handler.Service.Audits (postAuditsR) where
 
-import Prelude.Unicode
+import Import
 import Data.Acid.Advanced
 import Data.Conduit
 import Data.Conduit.List 
 import Data.Conduit.Text
-import Data.Text (Text)
 import qualified Data.Text as Text
-import Yesod
 
 import Db.AuditStore
 import ExtRep.XmlToObjectEdit
-import Service.AuditService
 
 
 
 
-postAuditsR ∷ Handlr ()
+postAuditsR ∷ Handler ()
 postAuditsR = do
             xml ← readRequestBody
             let editAction = fromEither ∘ parseObjectEdit $ xml

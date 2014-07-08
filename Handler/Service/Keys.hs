@@ -1,29 +1,26 @@
 {-# LANGUAGE UnicodeSyntax #-}
 {-# LANGUAGE QuasiQuotes #-}
-module Service.Keys (getKeysR) where
+module Handler.Service.Keys (getKeysR) where
 
-import Prelude.Unicode
+import Import
 import Data.Acid.Advanced
 import Data.List
-import Yesod
 
 import Db.AuditStore
 import Db.HistoryQueries (VersionsCount)
-import Service.AuditService
-import Service.Routes
 import Util.EntityKey
 
 
 
 
-getKeysR ∷ Handlr Html
+getKeysR ∷ Handler Html
 getKeysR = do
          ksv ← listEntityKeys
          defaultLayout $ renderKeys ksv
          --return $ renderKeys ksv renderRoute
 
 
-listEntityKeys ∷ Handlr [(EntityKey, VersionsCount)]
+listEntityKeys ∷ Handler [(EntityKey, VersionsCount)]
 listEntityKeys = do 
                app ← getYesod
                ks  ← query' (db app) AllEntityKeys

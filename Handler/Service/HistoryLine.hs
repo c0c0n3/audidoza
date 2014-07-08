@@ -1,28 +1,25 @@
 {-# LANGUAGE UnicodeSyntax #-}
 {-# LANGUAGE QuasiQuotes #-}
-module Service.HistoryLine (getHistoryLineR) where
+module Handler.Service.HistoryLine (getHistoryLineR) where
 
-import Prelude.Unicode
+import Import
 import Data.Acid.Advanced
-import Yesod
 
 import Audit.VersionedChange
 import Db.AuditStore
-import Service.AuditService
-import Service.Routes
 import Util.EntityKey
 import qualified Util.SequentialId as SeqId
 
 
 
 
-getHistoryLineR ∷ EntityKey → Int → Handlr Html
+getHistoryLineR ∷ EntityKey → Int → Handler Html
 getHistoryLineR entityKey howManyVersionsBack = do
                 ids ← listAudits entityKey howManyVersionsBack
                 defaultLayout $ renderAudits ids
 
 
-listAudits ∷ EntityKey → Int → Handlr [AuditId]
+listAudits ∷ EntityKey → Int → Handler [AuditId]
 listAudits k limit = do 
                    app ← getYesod
                    query' (db app) $ SelectHistoryLine limit k

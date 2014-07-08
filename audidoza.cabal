@@ -15,13 +15,10 @@ Flag library-only
 
 library
     hs-source-dirs:  ., app
-    exposed-modules: Application
-                     Foundation
-                     Import
-                     Settings
-                     Settings.StaticFiles
-                     Settings.Development
-                     Handler.Home
+
+    exposed-modules: RouteTypes, Util.EntityKey, Util.List, Util.Match, Util.Time, Util.Hxt, Util.SequentialId, Db.AuditStore, Db.HistoryUpdates, Db.AcidTypes, Db.HistoryQueries, Audit.ObjectHistory, Audit.VersionedChange, Audit.ContentHistory, Audit.EditAction, Diff.ObjectTree, Diff.DiffTree, Diff.Content, ExtRep.DiffTreeToHtml, ExtRep.XmlToObjectTree, ExtRep.XmlToObjectEdit
+    exposed-modules: Application, Foundation, Import, Settings, Settings.StaticFiles, Settings.Development
+    exposed-modules: Handler.Home, Handler.Service.Audits, Handler.Service.HistoryLine, Handler.Service.Keys, Handler.Service.Version
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT

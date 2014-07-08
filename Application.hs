@@ -20,9 +20,17 @@ import Network.Wai.Logger (clockDateCacher)
 import Data.Default (def)
 import Yesod.Core.Types (loggerSet, Logger (Logger))
 
+import Db.AuditStore (openStore)
+import qualified Data.Text as Text
+
 -- Import all relevant handler modules here.
 -- Don't forget to add new modules to your cabal file!
 import Handler.Home
+import Handler.Service.Audits
+import Handler.Service.HistoryLine
+import Handler.Service.Keys
+import Handler.Service.Version
+
 
 -- This line actually creates our YesodDispatch instance. It is the second half
 -- of the call to mkYesodData which occurs in Foundation.hs. Please see the
@@ -72,8 +80,12 @@ makeFoundation conf = do
             updateLoop
     _ <- forkIO updateLoop
 
+    auditStore <- openStore (Text.unpack . auditStoreDir . appExtra $ conf)  
+    --TODO: move out in separate file and add:
+    --      ⋅ bg thread to flush data & create check point at config-specified intervals.
+
     let logger = Yesod.Core.Types.Logger loggerSet' getter
-        foundation = App conf s manager logger
+        foundation = App conf s manager logger auditStore
 
     return foundation
 
