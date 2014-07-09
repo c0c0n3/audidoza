@@ -5,6 +5,7 @@ Default: &defaults
   copyright: Insert copyright statement here
   #analytics: UA-YOURCODE
   auditStoreDir: "audit-db"
+  checkpointInterval: 60  # in minutes
 
 Development:
   <<: *defaults

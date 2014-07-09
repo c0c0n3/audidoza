@@ -31,6 +31,9 @@ library
 
     exposed-modules: Handler.Home
 
+    -- Audit Service hooks into Yesod
+    exposed-modules: AppInit
+
     -- Audit Service handlers implementation in Yesod
     exposed-modules: Handler.Service.Audits, Handler.Service.HistoryLine, Handler.Service.Keys, 
                      Handler.Service.Version

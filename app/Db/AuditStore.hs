@@ -28,6 +28,9 @@ withStore acidStoreDir = bracket (openStore acidStoreDir) closeStore
 closeStore ∷ AuditStore → IO ()
 closeStore = createCheckpointAndClose
 
+checkpoint ∷ AuditStore → IO ()
+checkpoint = createCheckpoint
+
 
 $(makeAcidic ''ObjectHistory 
              [ 'writeAudit

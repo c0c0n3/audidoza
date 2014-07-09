@@ -20,8 +20,7 @@ import Network.Wai.Logger (clockDateCacher)
 import Data.Default (def)
 import Yesod.Core.Types (loggerSet, Logger (Logger))
 
-import Db.AuditStore (openStore)
-import qualified Data.Text as Text
+import AppInit
 
 -- Import all relevant handler modules here.
 -- Don't forget to add new modules to your cabal file!
@@ -80,10 +79,8 @@ makeFoundation conf = do
             updateLoop
     _ <- forkIO updateLoop
 
-    auditStore <- openStore (Text.unpack . auditStoreDir . appExtra $ conf)  
-    --TODO: move out in separate file and add:
-    --      ⋅ bg thread to flush data & create check point at config-specified intervals.
-
+    auditStore <- initAuditStore conf  
+    
     let logger = Yesod.Core.Types.Logger loggerSet' getter
         foundation = App conf s manager logger auditStore
 
