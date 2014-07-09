@@ -24,7 +24,7 @@ import Data.List
 --      projectIndexes [1..6] [0..9]   ⇝ [1,2,3,4,5,6]
 --
 projectIndexes ∷ [Integer] → [α] → [α]
-projectIndexes ixs xs = project (sort ixs) (zip [0..] xs)
+projectIndexes indexes xs = project (sort indexes) (zip [0..] xs)
     where
     project ixs@(i:is) zs@((j,x):rest)
             | i < j = project is zs

@@ -27,19 +27,19 @@ new ∷ ArrowXml hom ⇒ hom XmlTree ObjectEdit
 new = (findTag "newContent") `guards` 
       (metadata &&& state NewS ⋙ arr2 make)
     where
-    make (user, (time, key)) content = newContent user time key content
+    make (usr, (tyme, key)) content = newContent usr tyme key content
 
 deleted ∷ ArrowXml hom ⇒ hom XmlTree ObjectEdit
 deleted = (findTag "deletedContent") `guards` 
           (metadata &&& state OldS ⋙ arr2 make)
     where
-    make (user, (time, key)) content = delContent user time key content
+    make (usr, (tyme, key)) content = delContent usr tyme key content
 
 modified ∷ ArrowXml hom ⇒ hom XmlTree ObjectEdit
 modified = (findTag "modifiedContent") `guards` 
            (metadata &&& state OldS &&& state NewS ⋙ arr3 make)
     where
-    make (user, (time, key)) prev cur = modContent user time key prev cur
+    make (usr, (tyme, key)) prev cur = modContent usr tyme key prev cur
 
 user ∷ ArrowXml hom ⇒ hom XmlTree Text
 user = textOf "userName" 
@@ -63,4 +63,3 @@ state which = findTag (tag which) ⋙ innerXml
     where
     tag NewS = "newState"
     tag OldS = "oldState"
-

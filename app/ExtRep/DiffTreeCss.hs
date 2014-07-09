@@ -2,12 +2,11 @@
 --
 -- CSS to go with an HTML-rendered diff tree.
 --
-module ExtRep.DiffTreeCss (stylesheet) where
+module ExtRep.DiffTreeCss (stylesheet, main) where
 
 import BaseImport
 import Clay
 import Clay.Display
-import Data.Monoid
 import qualified Data.Text.Lazy.IO as TextIO
 
 import ExtRep.CssFontIcon
@@ -21,7 +20,7 @@ import ExtRep.CssFontIcon
 -- $ runhaskell -isrc src/ExtRep/DiffTreeCss.hs > diff-tree.css
 --
 main ∷ IO ()
-main = TextIO.putStr ∘ renderWith compact $ stylesheet
+main = TextIO.putStr ∘ renderWith compact [] $ stylesheet
 
 stylesheet ∷ Css
 stylesheet = do 
@@ -94,9 +93,9 @@ diffTreeStyle = do
 
 
 putIconBefore ∷ Selector → Css → Css
-putIconBefore s icon = s ? before & do
-                     icon
-                     paddingRight (px 5)
+putIconBefore sel ikon = sel ? before & do
+                       ikon
+                       paddingRight (px 5)
 
 pencilIcon = mkFontIcon "\\e600" >> color solarOrange >> fontSize (pct 80)
 userIcon   = mkFontIcon "\\e601"

@@ -33,6 +33,7 @@ import Util.SequentialId
 --                 class name + entity id)
 newtype HistoryLine = HistoryLine { versions ∷ [AuditId] } deriving (Show, Data, Typeable) 
                       -- pointers to versioned changes in desc order
+emptyHistoryLine ∷ HistoryLine
 emptyHistoryLine = HistoryLine []
 
 -- all audit records
@@ -61,9 +62,9 @@ historyLine contentKey = versions
 -- look up versioned changes given their audit ids.
 -- returned list is sorted by audit id, so from most to least recent changes.
 lookupVersions ∷ [AuditId] → ContentHistory κ ξ → [VersionedChange κ ξ]
-lookupVersions ids = toList ∘ (@+ (map AuditIdIx ids)) ∘ versionedChanges
+lookupVersions ids = toLst ∘ (@+ (map AuditIdIx ids)) ∘ versionedChanges
     where
-    toList = toDescList (Proxy ∷ Proxy AuditIdIx)
+    toLst = toDescList (Proxy ∷ Proxy AuditIdIx)
 
 -- version number and audit id of most recent version of content identified by κ.
 currentVersion ∷ Ord κ ⇒ κ → ContentHistory κ ξ → Maybe (VersionId, AuditId)
@@ -82,30 +83,30 @@ countVersions contentKey = fromMaybe 0 ∘ fmap (unSeqId ∘ fst) ∘ currentVer
 -- add content change to history, thus making new version of content identified 
 -- by κ.
 pushChange ∷ Ord κ ⇒ EditAction κ ξ → ContentHistory κ ξ → ContentHistory κ ξ
-pushChange change db = ContentHistory 
-                       { versionedChanges = insert vc ∘ versionedChanges $ db
-                       , historyLines = pushVersion vc ∘ historyLines $ db
-                       , lastAuditId = auditId vc 
-                       }
+pushChange chnge db = ContentHistory 
+                      { versionedChanges = insert vc ∘ versionedChanges $ db
+                      , historyLines = pushVersion vc ∘ historyLines $ db
+                      , lastAuditId = auditId vc 
+                      }
     where
-    vc = newVersion db change
+    vc = newVersion db chnge
 
 -- push audit id of new version into versions stack.
 pushVersion ∷ Ord κ ⇒ VersionedChange κ ξ → Map κ HistoryLine → Map κ HistoryLine
-pushVersion newVersion = Map.insertWith ifExists kontentId initialEntry
+pushVersion newVers = Map.insertWith ifExists kontentId initialEntry
     where
-    kontentId    = contentId ∘ editAction $ newVersion 
-    newAuditId   = auditId newVersion
+    kontentId    = contentId ∘ editAction $ newVers
+    newAuditId   = auditId newVers
     initialEntry = HistoryLine [newAuditId]
     ifExists _ (HistoryLine stack) = HistoryLine (newAuditId : stack)
 
 -- make new versioned change for given edit action.
 -- (entails assigning next audit id and version number.)
 newVersion ∷ Ord κ ⇒ ContentHistory κ ξ → EditAction κ ξ → VersionedChange κ ξ
-newVersion db change = 
+newVersion db chnge = 
            VersionedChange
            { auditId    = succ ∘ lastAuditId $ db
            , version    = succ ∘ fromMaybe seqIdSeed ∘ fmap fst 
-                          ∘ currentVersion (contentId change) $ db
-           , editAction = change
+                          ∘ currentVersion (contentId chnge) $ db
+           , editAction = chnge
            }

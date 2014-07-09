@@ -13,7 +13,6 @@ module Util.EntityKey
 
 import BaseImport
 import Data.Data
-import Data.Either
 import Data.List
 import qualified Data.Text as T 
 import Data.Text.Read
@@ -24,9 +23,9 @@ newtype EntityKey = EntityKey { unEntityKey ∷ (Text, Integer) }
                   deriving (Eq, Ord, Read, Data, Typeable)
 
 mkEntityKey ∷ Text → Integer → Maybe EntityKey
-mkEntityKey className entityId 
-            | entityId > 0 = Just $ EntityKey (T.strip className, entityId)
-            | otherwise    = Nothing
+mkEntityKey clazzName entId 
+            | entId > 0 = Just $ EntityKey (T.strip clazzName, entId)
+            | otherwise = Nothing
 
 className ∷ EntityKey → Text
 className = fst ∘ unEntityKey
@@ -35,6 +34,7 @@ entityId ∷ EntityKey → Integer
 entityId = snd ∘ unEntityKey
 
 -- we only allow entityId > 0; so, if needed, this value could be used as ⊥
+btmEntityKey ∷ EntityKey
 btmEntityKey = EntityKey (T.empty, 0)  
 
 
@@ -58,4 +58,3 @@ toIntegr = either (const 0) check ∘ signed decimal ∘ T.strip
 
 toText ∷ EntityKey → Text
 toText k = T.concat [className k, "~", T.pack ∘ show ∘ entityId $ k]
-

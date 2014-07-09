@@ -43,16 +43,16 @@ data EditAction κ ξ =
                 deriving (Eq, Ord, Show, Data, Typeable)
 
 newContent ∷ Text → UTCTime → κ → ξ → EditAction κ ξ
-newContent user time contentId content 
-           = EditAction user time contentId
+newContent user time contId content 
+           = EditAction user time contId
            $ NewContent content
 
 modContent ∷ Text → UTCTime → κ → ξ → ξ → EditAction κ ξ
-modContent user time contentId prevContent curContent 
-           = EditAction user time contentId 
+modContent user time contId prevContent curContent 
+           = EditAction user time contId 
            $ ModContent prevContent curContent
 
 delContent ∷ Text → UTCTime → κ → ξ → EditAction κ ξ
-delContent user time contentId content 
-           = EditAction user time contentId
+delContent user time contId content 
+           = EditAction user time contId
            $ DelContent content

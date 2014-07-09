@@ -27,6 +27,7 @@ readRequestBody ∷ MonadHandler m ⇒ m Text
 readRequestBody = (rawRequestBody $= decodeUtf8 $$ consume) 
                 >>= (return ∘ Text.concat)
 
+fromEither ∷ Either Text ρ → ρ
 fromEither (Right v)       = v
 fromEither (Left errorMsg) = error $ Text.unpack errorMsg  
                              -- TODO: come up w/ better solution, e.g. throw/log

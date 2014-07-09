@@ -18,7 +18,6 @@ where
 import BaseImport
 import Data.Ord
 import Data.Tree.Class
-import Data.Tree.NTree.TypeDefs
 
 import Diff.Content
 import Util.Match

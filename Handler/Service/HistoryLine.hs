@@ -14,8 +14,8 @@ import qualified Util.SequentialId as SeqId
 
 
 getHistoryLineR ∷ EntityKey → Int → Handler Html
-getHistoryLineR entityKey howManyVersionsBack = do
-                ids ← listAudits entityKey howManyVersionsBack
+getHistoryLineR eKey howManyVersionsBack = do
+                ids ← listAudits eKey howManyVersionsBack
                 defaultLayout $ renderAudits ids
 
 
@@ -25,6 +25,7 @@ listAudits k limit = do
                    query' (db app) $ SelectHistoryLine limit k
 
 
+renderAudits ∷ [AuditId] → Widget
 renderAudits ids = [whamlet|
     <div class="auditsListView">
       <ul class="auditsList">
@@ -33,3 +34,4 @@ renderAudits ids = [whamlet|
             <a href=@{VersionR i}
                title="View version.">version: #{SeqId.toText i}
 |]
+

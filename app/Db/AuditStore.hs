@@ -10,7 +10,7 @@ import Data.Acid.Local
 
 import Audit.ContentHistory
 import Audit.ObjectHistory
-import Db.AcidTypes
+import Db.AcidTypes ()
 import Db.HistoryQueries
 import Db.HistoryUpdates
 

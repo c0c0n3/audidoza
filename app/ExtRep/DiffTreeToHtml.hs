@@ -7,13 +7,10 @@
 module ExtRep.DiffTreeToHtml (RenderableTree) where
 
 import BaseImport
-import Control.Monad
 import Data.List
 import Data.Ord
 import Data.Tree.Class
-import Text.Blaze (toValue)
 import Text.Blaze.Html5
-import Text.Blaze.Html5.Attributes
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
 
@@ -69,18 +66,18 @@ renderForest ts = ul $ mapM_ renderTree (sortBy cmp ts)
     cmp = comparing (diffContentNodeId ∘ getNode)
 
 renderNode ∷ RenderableTree t ξ ⇒ DiffTree t ξ → Html
-renderNode t = item ∘ getNode $ t
+renderNode t = itm ∘ getNode $ t
     where
     nic ∷ String → AttributeValue   -- node indicator class
     nic clazz = toValue $ (clazz++) $ if isLeaf t then " leaf" else " inner"  
     
-    item (New x)           = wrap (nic "new") x
-    item (Deleted x)       = wrap (nic "deleted") x
-    item (Unchanged x)     = wrap (nic "unchanged") x
-    item (Changed old new) = mkSpan (nic "changed") $ 
-                             (mkNameValueSpan old >> mkSpanH "newPayload" (payload new))
+    itm (New x)           = wrapS (nic "new") x
+    itm (Deleted x)       = wrapS (nic "deleted") x
+    itm (Unchanged x)     = wrapS (nic "unchanged") x
+    itm (Changed old new) = mkSpan (nic "changed") $ 
+                            (mkNameValueSpan old >> mkSpanH "newPayload" (payload new))
 
-    mkSpan clazz = H.span ! class_ clazz
+    mkSpan clazz = H.span ! A.class_ clazz
     mkSpanH clazz content = mkSpan clazz $ (toHtml content)
     mkNameValueSpan x = mkSpanH "nodeName" (nodeName x) >> mkSpanH "payload" (payload x)
-    wrap clazz x = mkSpan clazz $ mkNameValueSpan x
+    wrapS clazz x = mkSpan clazz $ mkNameValueSpan x

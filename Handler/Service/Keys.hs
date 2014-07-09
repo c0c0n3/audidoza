@@ -26,6 +26,8 @@ listEntityKeys = do
                ks  ← query' (db app) AllEntityKeys
                return ∘ sort $ ks
 
+
+renderKeys ∷ [(EntityKey, VersionsCount)] → Widget
 renderKeys ksv = [whamlet|
     <div class="keysListView">
       <ul class="keysList">

@@ -63,19 +63,22 @@ build t | isObject x = [object (name t) (objectId x) subTrees]
 
 data NodeSplit t ξ = NS { oid ∷ Maybe Integer, props ∷ [t ξ], texts ∷ [t ξ] }
  
+isObject ∷ NodeSplit t ξ → Bool
 isObject (NS (Just _) _ _) = True 
 isObject _                 = False
 
+isField ∷ NodeSplit t ξ → Bool
 isField (NS Nothing [] _) = True
 isField _                 = False
 
+objectId ∷ NodeSplit t ξ → Integer
 objectId = fromMaybe 0 ∘ oid
 
 
 splitChildren ∷ XTree t ξ ⇒ t ξ → NodeSplit t ξ
-splitChildren t = NS { oid = parseObjectId is, props = ps, texts = xs }
+splitChildren tr = NS { oid = parseObjectId ids, props = prps, texts = txs }
     where
-    (is, ps, xs) = foldr maybeAdd ([], [], []) (getChildren t)
+    (ids, prps, txs) = foldr maybeAdd ([], [], []) (getChildren tr)
     maybeAdd t (is, ps, xs) | isText t  = (is, ps, t:xs)
                             | isIdTag t = (t:is, ps, xs)
                             | isElem t  = (is, t:ps, xs)
@@ -86,4 +89,3 @@ parseObjectId = join ∘ find isJust ∘ map (readMaybe ∘ tagText)
 
 isIdTag ∷ XTree t ξ ⇒ t ξ → Bool
 isIdTag t = (isElem t) ∧ ((≡"id") ∘ stringToLower ∘ tagName $ t)
-

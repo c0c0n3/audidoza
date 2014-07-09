@@ -24,7 +24,7 @@ import Util.EntityKey
 
 
 
-data ObjectNode = Field  { fieldName ∷ Text, fieldValue ∷ Text }
+data ObjectNode = Field  Text Text -- { fieldName ∷ Text, fieldValue ∷ Text }
                 | Object EntityKey
 
 instance Show ObjectNode where
@@ -62,9 +62,10 @@ field ∷ Tree t ⇒ Text → Text → ObjectTree t
 field name value = mkTree (Field name value) []
 
 object ∷ Tree t ⇒ Text → Integer → ([ObjectTree t] → ObjectTree t)
-object className entityId = mkTree (Object entityKey)
+object clazzName entId = mkTree (Object entityKey)
     where
-    entityKey = fromMaybe btmEntityKey $ mkEntityKey className entityId
+    entityKey = fromMaybe btmEntityKey $ mkEntityKey clazzName entId
 
 addChildren ∷ Tree t ⇒ ObjectTree t → [ObjectTree t] → ObjectTree t
 addChildren t cs = changeChildren (++cs) t
+

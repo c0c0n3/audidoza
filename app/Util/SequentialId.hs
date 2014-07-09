@@ -11,7 +11,6 @@ module Util.SequentialId
 
 import BaseImport hiding (null)
 import Data.Data
-import Data.Either
 import Data.Text
 import Data.Text.Read
 
@@ -20,6 +19,7 @@ import Data.Text.Read
 newtype SeqId = SeqId { unSeqId ∷ Integer } 
                 deriving (Eq, Ord, Enum, Read, Show, Data, Typeable)
 
+seqIdSeed ∷ SeqId
 seqIdSeed = SeqId 0  -- we only allow to generate values from 1 on
                      -- if needed, this value could be used as ⊥
 

@@ -2,3 +2,5 @@
 :set -i.:config:dist/build/autogen:app:tests/app
 :set -DDEVELOPMENT
 :set -XTemplateHaskell -XQuasiQuotes -XOverloadedStrings -XNoImplicitPrelude -XCPP -XMultiParamTypeClasses -XTypeFamilies -XGADTs -XGeneralizedNewtypeDeriving -XFlexibleContexts -XEmptyDataDecls -XNoMonomorphismRestriction -XDeriveDataTypeable -XUnicodeSyntax -XConstraintKinds -XTypeSynonymInstances -XFlexibleInstances -XStandaloneDeriving -XDataKinds
+:set -Wall
+:set -fno-warn-missing-signatures

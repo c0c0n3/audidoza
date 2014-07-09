@@ -6,7 +6,6 @@ import BaseImport
 import Data.Maybe
 import qualified Data.Text as Text
 import Data.Text.Read
-import Data.Tree.Class (Tree)
 import qualified Data.Tree.Class as Tree
 import Text.XML.HXT.Core
 import Text.XML.HXT.DOM.XmlNode (XmlNode)
@@ -29,10 +28,10 @@ tagText = concatMap (fromMaybe [] ∘  XmlNode.getText) ∘ Tree.getChildren
 
 
 textOf ∷ ArrowXml hom ⇒ String → hom XmlTree Text
-textOf tagName = hasName tagName ⋙ multi (getText ⋙ arr Text.pack) >. Text.concat
+textOf tgName = hasName tgName ⋙ multi (getText ⋙ arr Text.pack) >. Text.concat
 
 integerOf ∷ ArrowXml hom ⇒ String → hom XmlTree Integer
-integerOf tagName = textOf tagName ⋙ arr parse
+integerOf tgName = textOf tgName ⋙ arr parse
     where
     parse = either (const 0) fst ∘ signed decimal ∘ Text.strip
 
@@ -40,7 +39,7 @@ innerXml ∷ ArrowXml hom ⇒ hom XmlTree Text
 innerXml = xshow (getChildren ⋙ isElem) ⋙ arr Text.pack
 
 findTag ∷ ArrowXml hom ⇒ String → hom XmlTree XmlTree
-findTag tagName = deep $ hasName tagName
+findTag tgName = deep $ hasName tgName
 
 
 toXTree ∷ Text → XmlTree
@@ -69,4 +68,3 @@ parseDocRoot f xml = case parsed of
 
 toEither ∷ ArrowXml hom ⇒ hom XmlTree ξ → hom XmlTree (Either ε ξ)
 toEither f = f ⋙ arr Right 
-

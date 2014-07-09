@@ -4,8 +4,6 @@
 module Db.AcidTypes where
 
 import BaseImport
-import Control.Applicative
-import Data.Data
 import Data.SafeCopy
 
 import Audit.ContentHistory

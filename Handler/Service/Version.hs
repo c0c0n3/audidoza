@@ -5,13 +5,12 @@ module Handler.Service.Version (getVersionR) where
 import Import
 import Data.Acid.Advanced
 import Data.Maybe
-import Text.Blaze.Html (toHtml)
 
 import Audit.EditAction
 import Audit.ObjectHistory
 import Audit.VersionedChange
 import Db.AuditStore
-import ExtRep.DiffTreeToHtml
+import ExtRep.DiffTreeToHtml ()
 import Util.SequentialId
 import Util.Time
 
@@ -19,17 +18,17 @@ import Util.Time
 
 
 getVersionR ∷ AuditId → Handler Html
-getVersionR auditId = do
-                    mv ← findVersion auditId
+getVersionR audId = do
+                    mv ← findVersion audId
                     case mv of
                          Just v  → return $ renderVersion v undefined
                          Nothing → return $ renderNothing undefined
 
 
 findVersion ∷ AuditId → Handler (Maybe VersionedObject)
-findVersion auditId = do 
+findVersion audId = do 
                     app ← getYesod
-                    v   ← query' (db app) $ SelectVersions [auditId]
+                    v   ← query' (db app) $ SelectVersions [audId]
                     return ∘ listToMaybe $ v 
 
 renderDiff ∷ VersionedObject → Html

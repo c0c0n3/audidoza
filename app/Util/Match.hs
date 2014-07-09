@@ -22,6 +22,15 @@ data MatchResult ξ = MatchResult
                    }
      deriving Show
 
+addRight ∷ MatchResult ξ → [ξ] → MatchResult ξ
+addRight r zs  = r { rightOnly = rightOnly r ++ zs }
+
+addLeft ∷ MatchResult ξ → [ξ] → MatchResult ξ
+addLeft r zs  = r { leftOnly = leftOnly r ++ zs }
+
+addBoth ∷ MatchResult ξ → ξ → ξ → MatchResult ξ 
+addBoth r x y = r { both = (x, y) : both r }
+
 
 match ∷ Ord ξ ⇒ [ξ] → [ξ] → MatchResult ξ
 match = matchBy compare
@@ -43,7 +52,4 @@ matchBy cmp left right = φ (MatchResult [] [] []) (sortBy cmp left) (sortBy cmp
         | cmp x y ≡ EQ = φ (addBoth  r x y) xs  ys
         | cmp x y ≡ LT = φ (addLeft  r [x]) xs  rgt
         | cmp x y ≡ GT = φ (addRight r [y]) lft ys
-    
-    addRight r zs  = r { rightOnly = rightOnly r ++ zs }
-    addLeft  r zs  = r { leftOnly  = leftOnly  r ++ zs }
-    addBoth  r x y = r { both      = (x, y) : both r   }
+    φ r _ _ = r
