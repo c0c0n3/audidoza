@@ -1,0 +1,6 @@
+<div class="auditsListView">
+  <ul class="auditsList">
+    $forall i <- ids
+      <li class="audit">
+        <a href=@{versionUrl i}
+           title="View version.">#{SeqId.toText i}

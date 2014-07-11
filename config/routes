@@ -9,3 +9,7 @@
 /audits/keys KeysR GET
 /audits/versions/entity/#EntityKey/last/#Int HistoryLineR GET
 /audits/versions/id/#AuditId VersionR GET
+
+/site/keys ViewKeysR GET
+/site/versions/entity/#EntityKey/last/#Int ViewHistoryLineR GET
+/site/versions/id/#AuditId ViewVersionR GET

@@ -38,6 +38,10 @@ library
     exposed-modules: Handler.Service.Audits, Handler.Service.HistoryLine, Handler.Service.Keys, 
                      Handler.Service.Version
 
+    -- Audit Site handlers implementation in Yesod
+    exposed-modules: Handler.Site.Keys, Handler.Site.HistoryLine, Handler.Site.Layout,
+                     Handler.Site.Version
+
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT
@@ -77,6 +81,7 @@ library
                  , yesod-auth                    >= 1.3        && < 1.4
                  , yesod-static                  >= 1.2        && < 1.3
                  , yesod-form                    >= 1.3        && < 1.4
+                 , yesod-routes                  >= 1.2        && < 1.3
                  , bytestring                    >= 0.9        && < 0.11
                  , text                          >= 0.11       && < 2.0
                  , template-haskell

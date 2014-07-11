@@ -1,0 +1,8 @@
+<div class="keysListView">
+  <ul class="keysList">
+    $forall (k, count) <- ksv
+      <li class="key">
+        <a href=@{historyLineUrl k 100} title="View last 100 versions.">
+          <span class="className">#{className k}
+          <span class="entityId">#{entityId k}
+          <span class="versionsCount">#{count}

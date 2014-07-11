@@ -48,6 +48,7 @@ mkMessage "App" "messages" "en"
 -- explanation for this split.
 mkYesodData "App" $(parseRoutesFile "config/routes")
 
+type AppRoute = Route App
 type Form x = Html -> MForm (HandlerT App IO) (FormResult x, Widget)
 
 -- Please see the documentation for the Yesod typeclass. There are a number

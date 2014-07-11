@@ -1,0 +1,7 @@
+<div class="diffView">
+  <div class="diffHeader">
+    <span class="username" title="User who made the change.">#{username $ editAction v}
+    <span class="timestamp" title="When changed.">#{showDateTime $ timeOfChange $ editAction v}
+    <span class="version" title="Change version number.">#{toText $ version v}
+  <div class="diffTree">
+    #{renderDiff v}

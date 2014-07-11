@@ -29,6 +29,9 @@ import Handler.Service.Audits
 import Handler.Service.HistoryLine
 import Handler.Service.Keys
 import Handler.Service.Version
+import Handler.Site.Keys
+import Handler.Site.HistoryLine
+import Handler.Site.Version
 
 
 -- This line actually creates our YesodDispatch instance. It is the second half
