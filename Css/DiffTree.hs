@@ -2,22 +2,22 @@
 --
 -- CSS to go with an HTML-rendered diff tree.
 --
-module ExtRep.DiffTreeCss (stylesheet, main) where
+module Css.DiffTree (stylesheet, main) where
 
 import BaseImport
 import Clay
 import Clay.Display
 import qualified Data.Text.Lazy.IO as TextIO
 
-import ExtRep.CssFontIcon
-
+import Css.FontIcon
+import Css.Images
 
 
 --
 -- call from build script to generate css file; e.g.
 --
--- $ cd audit-service
--- $ runhaskell -isrc src/ExtRep/DiffTreeCss.hs > diff-tree.css
+-- $ cd audidoza
+-- $ runhaskell -iapp Css/DiffTree.hs > static/css/diff-tree.css
 --
 main ∷ IO ()
 main = TextIO.putStr ∘ renderWith compact [] $ stylesheet
@@ -47,7 +47,7 @@ headerStyle = do
             backgroundColor (rgba 45 99 96 200)
             color (rgba 255 255 255 165)
             headerFont
-            backgroundImages [url "noise.png"]  -- TODO externalize
+            backgroundImages [url noise_png]
 
 diffTreeStyle = do
               ul ? do "list-style-type" -: "none"  

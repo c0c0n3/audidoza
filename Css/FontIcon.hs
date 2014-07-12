@@ -2,7 +2,7 @@
 --
 -- CSS to go with an HTML-rendered diff tree.
 --
-module ExtRep.CssFontIcon (iconFontFace, mkFontIcon) where
+module Css.FontIcon (iconFontFace, mkFontIcon) where
 
 import BaseImport
 import Clay

@@ -16,13 +16,15 @@ Flag library-only
 library
     hs-source-dirs:  ., app
 
+    -- Css generation
+    other-modules: Css.DiffTree, Css.FontIcon, Css.Images
+
     -- Audit library
     other-modules: BaseImport, RouteTypes
     other-modules: Audit.ContentHistory, Audit.EditAction, Audit.ObjectHistory, Audit.VersionedChange
     other-modules: Db.AcidTypes, Db.AuditStore, Db.HistoryQueries, Db.HistoryUpdates
     other-modules: Diff.Content, Diff.DiffTree, Diff.ObjectTree 
-    other-modules: ExtRep.CssFontIcon, ExtRep.DiffTreeCss, 
-                   ExtRep.DiffTreeToHtml, ExtRep.XmlToObjectEdit, ExtRep.XmlToObjectTree
+    other-modules: ExtRep.DiffTreeToHtml, ExtRep.XmlToObjectEdit, ExtRep.XmlToObjectTree
     other-modules: Util.EntityKey, Util.Hxt, Util.List, Util.Match, Util.SequentialId, Util.Time
 
     -- Yesod scaffolding

@@ -19,6 +19,4 @@ getViewVersionR audId = do
                            toWidgetBody semanticHtml 
 
 -- TODO: add Shake build file to generate CSS and *then* build the site.
--- TODO: DiffTreeCss includes "noise.png", i.e. no type-safe URL.
---       One option would be to base-64 encode the image and include it as data in CSS;
---       another option would be to pass a type-safe URL to DiffTreeCss.main.
+
