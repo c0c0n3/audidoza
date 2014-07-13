@@ -1,6 +1,10 @@
 {-# LANGUAGE UnicodeSyntax #-}
 {-# LANGUAGE TemplateHaskell #-}
-module Handler.Service.Version (getVersionR) where
+module Handler.Service.Version 
+    ( getVersionR
+    , findVersion
+    )
+where
 
 import Import
 import Data.Acid.Advanced

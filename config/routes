@@ -9,7 +9,15 @@
 /audits/keys KeysR GET
 /audits/versions/entity/#EntityKey/last/#Int HistoryLineR GET
 /audits/versions/id/#AuditId VersionR GET
+/audits/versions/id/#AuditId/raw/new RawNewVersionR GET
+/audits/versions/id/#AuditId/raw/prev RawPrevVersionR GET
+/audits/versions/id/#AuditId/raw/cur RawCurVersionR GET
+/audits/versions/id/#AuditId/raw/del RawDelVersionR GET
 
 /site/keys ViewKeysR GET
 /site/versions/entity/#EntityKey/last/#Int ViewHistoryLineR GET
 /site/versions/id/#AuditId ViewVersionR GET
+/site/versions/id/#AuditId/raw/new ViewRawNewVersionR GET
+/site/versions/id/#AuditId/raw/prev ViewRawPrevVersionR GET
+/site/versions/id/#AuditId/raw/cur ViewRawCurVersionR GET
+/site/versions/id/#AuditId/raw/del ViewRawDelVersionR GET

@@ -38,11 +38,11 @@ library
 
     -- Audit Service handlers implementation in Yesod
     exposed-modules: Handler.Service.Audits, Handler.Service.HistoryLine, Handler.Service.Keys, 
-                     Handler.Service.Version
+                     Handler.Service.Raw, Handler.Service.Version
 
     -- Audit Site handlers implementation in Yesod
     exposed-modules: Handler.Site.Keys, Handler.Site.HistoryLine, Handler.Site.Layout,
-                     Handler.Site.Version
+                     Handler.Site.Raw, Handler.Site.Version
 
 
     if flag(dev) || flag(library-only)

@@ -1,6 +1,15 @@
-<div class="auditsListView">
-  <ul class="auditsList">
-    $forall i <- ids
-      <li class="audit">
-        <a href=@{versionUrl i}
-           title="View version.">#{SeqId.toText i}
+<div .auditsListView>
+  <ul .auditsList>
+    $forall v <- versions
+      <li .audit>
+        <span .username title="User who made the change.">#{username $ editAction v}
+        <span .timestamp title="When changed.">#{showDateTime $ timeOfChange $ editAction v}
+        <a .version href=@{versionUrl u $ version v} title="View version.">#{SeqId.toText $ version v}
+        $case (auditedContent $ editAction v)
+              $of NewContent _
+                  <a .newState href=@{rawNewUrl u $ version v} title="View raw version.">
+              $of ModContent _ _
+                  <a .prevState href=@{rawPrevUrl u $ version v} title="View raw version.">
+                  <a .curState href=@{rawCurUrl u $ version v} title="View raw version.">
+              $of DelContent _
+                  <a .curState href=@{rawDelUrl u $ version v} title="View raw version."> 
