@@ -59,7 +59,7 @@ type VersionedChanges κ ξ = IxSet AuditIxs (VersionedChange κ ξ)
 
 
 instance Indexable AuditIxs (VersionedChange κ ξ) where
-    empty = mkEmpty
+    indices = ixList
             (mkIx AuditIdIx auditId)
             (mkIx UsernameIx (username ∘ editAction))
             (mkIx TimeOfChangeIx (timeOfChange ∘ editAction))
