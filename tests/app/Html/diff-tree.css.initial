@@ -1,0 +1,184 @@
+
+@font-face 
+{
+    font-family: 'icomoon';
+    src:url('fonts/icomoon.eot?-7p8qip');
+    src:url('fonts/icomoon.eot?#iefix-7p8qip') format('embedded-opentype'),
+        url('fonts/icomoon.woff?-7p8qip') format('woff'),
+        url('fonts/icomoon.ttf?-7p8qip') format('truetype'),
+        url('fonts/icomoon.svg?-7p8qip#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.diffTree .changed::before
+{
+    content: "\e600";  /* pencil */
+    font-size: 80%;
+    padding-right: 5px;
+    color: #cb4b16;  /* #b58900; */
+
+    /* Ico Moon shared code below */
+ 
+    font-family: 'icomoon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.diffTree .new::before
+{
+    content: "\e602";  /* plus */
+    font-size: 80%;
+    padding-right: 5px;
+    color: #859900;
+
+    /* Ico Moon shared code below */
+ 
+    font-family: 'icomoon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.diffTree .deleted::before
+{
+    content: "\e601";  /* minus */
+    font-size: 80%;
+    padding-right: 5px;
+    color: #cb4b16;
+
+    /* Ico Moon shared code below */
+ 
+    font-family: 'icomoon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.diffTree .newPayload::before
+{
+    content: "\e603";  /* arrow right */
+    font-size: 80%;
+    margin-right: 10px;
+    margin-left: 10px;
+    color: #cb4b16;
+
+    /* Ico Moon shared code below */
+ 
+    font-family: 'icomoon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.diffTree
+{
+    background-color: #fdf6e3;
+    color: #657b83;
+    padding: 5px 50px 5px 0px;
+    display: table;
+}
+
+.diffTree ul 
+{
+    list-style-type: none;
+}
+
+.diffTree .nodeName 
+{
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-style: italic;
+    font-size: 16px;
+}
+
+.diffTree .inner .payload::before
+{
+    content: "#";
+    font-family: "Lucida Console", Monaco, monospace;
+    font-size: 14px;
+}
+
+.diffTree .leaf .nodeName::after
+{
+    content: ":";
+    font-family: "Lucida Console", Monaco, monospace;
+    font-size: 14px;
+}
+
+.diffTree .payload, .diffTree .newPayload 
+{
+    font-family: "Lucida Console", Monaco, monospace;
+    font-size: 14px;
+}
+
+.diffTree .payload 
+{
+    margin-left: 15px;
+}
+
+.diffTree .inner
+{
+    display: block;
+
+    /* background-color: #eee8d5; */
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    
+    border-top-style: solid;
+    border-top-width: 2px;
+    border-top-color: #eee8d5;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #eee8d5;
+}
+
+.diffTree .newPayload 
+{
+    color: #268bd2;
+}
+
+.diffTree .new .payload 
+{
+    color: #859900;  /* #268bd2; */
+}
+
+.diffTree .unchanged
+{
+    color: #eee8d5; /* #93a1a1; */
+}
+
+.diffTree .changed .payload
+{
+    color: #93a1a1;
+}

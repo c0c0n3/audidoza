@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<editAction xmlns="http://billdoza.co.za/audit/v1">
+  <userName>u1</userName>
+  <timeOfChange>10</timeOfChange>
+  <!-- millis from epoc -->
+  <entityKey>
+    <className>root</className>
+    <persistentId>1</persistentId>
+  </entityKey>
+  <content>
+    <newContent>
+      <newState>
+        <root>
+          <id>1</id>
+          <r1>r1</r1>
+          <X>
+            <id>1</id>
+            <x1>x1</x1>
+            <x2>x2</x2>
+            <W>
+              <id>1</id>
+            </W>
+          </X>
+          <Y>
+            <id>1</id>
+            <y1>y1</y1>
+            <Z>
+              <id>1</id>
+              <z1>z1</z1>
+              <z2>z2</z2>
+            </Z>
+          </Y>
+        </root>
+      </newState>
+    </newContent>
+  </content>
+</editAction>

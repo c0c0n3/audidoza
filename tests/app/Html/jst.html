@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html><head><title>Diff Tree Rendered with JS Tree</title>
+<script src="jstree-dist/libs/jquery.js"></script>
+<script src="jstree-dist/jstree.min.js"></script>
+<link rel="stylesheet" href="jstree-dist/themes/default/style.min.css">
+<script>$(function () { $('#jst-test').jstree(); });</script>
+</head>
+<body><div id="jst-test"><ul><li><span class="unchanged"><span class="nodeName">root</span><span class="payload">1</span></span><ul><li><span class="changed"><span class="nodeName">r1</span><span class="payload">r1</span><span class="newPayload">r1 (mod)</span></span></li><li><span class="unchanged"><span class="nodeName">X</span><span class="payload">1</span></span><ul><li><span class="unchanged"><span class="nodeName">x1</span><span class="payload">x1</span></span></li><li><span class="changed"><span class="nodeName">x2</span><span class="payload">x2</span><span class="newPayload">x2 (mod)</span></span></li><li><span class="new"><span class="nodeName">x3</span><span class="payload">new</span></span></li><li><span class="unchanged"><span class="nodeName">W</span><span class="payload">1</span></span><ul><li><span class="new"><span class="nodeName">w1</span><span class="payload">new</span></span></li></ul></li></ul></li><li><span class="unchanged"><span class="nodeName">Y</span><span class="payload">1</span></span><ul><li><span class="deleted"><span class="nodeName">y1</span><span class="payload">y1</span></span></li><li><span class="new"><span class="nodeName">y2</span><span class="payload">new</span></span></li><li><span class="unchanged"><span class="nodeName">Z</span><span class="payload">1</span></span><ul><li><span class="unchanged"><span class="nodeName">z1</span><span class="payload">z1</span></span></li><li><span class="unchanged"><span class="nodeName">z2</span><span class="payload">z2</span></span></li></ul></li></ul></li><li><span class="new"><span class="nodeName">Y</span><span class="payload">2</span></span><ul><li><span class="new"><span class="nodeName">y2</span><span class="payload">y2</span></span></li></ul></li></ul></li></ul></div>
+</body>
+</html>
